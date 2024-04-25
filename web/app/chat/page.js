@@ -11,7 +11,7 @@ import styles from '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
 import { UserCircleIcon, DotsVerticalIcon } from '@heroicons/react/outline';
 
 export default function Home() {
-    const [sessionID, setSessionID] = useState("");
+    const [sessionID, setSessionID] = useState("")
     const [chatMessages, setChatMessages] = useState([]);
     const [inputMessage, setInputMessage] = useState("");
     let sessionStarted = false;
@@ -23,7 +23,7 @@ export default function Home() {
             .then(response => response.json())
             .then(data => {
                 setSessionID(data.session_id);
-                setChatMessages(prevMessages => [...prevMessages, { sender: "Assistant", message: data.response, sentTime: "just now", direction: "incoming" }]); // 将服务端返回的第一句话加入聊天框
+                setChatMessages(prevMessages => [...prevMessages, { sender: "Assistant", message: data.response, sentTime: "just now", direction: "incoming" }]); // å°æå¡ç«¯è¿åçç¬¬ä¸å¥è¯å å¥èå¤©æ¡
             });
     }, []);
 
@@ -38,7 +38,7 @@ export default function Home() {
         })
             .then(response => response.json())
             .then(data => {
-                setChatMessages(prevMessages => [...prevMessages, { sender: "Assistant", message: data.response, sentTime: "just now", direction: "incoming" }]); // 将服务端返回的回复加入聊天框
+                setChatMessages(prevMessages => [...prevMessages, { sender: "Assistant", message: data.response, sentTime: "just now", direction: "incoming" }]); // å°æå¡ç«¯è¿åçåå¤å å¥èå¤©æ¡
             });
         setInputMessage("");
     }
@@ -50,7 +50,7 @@ export default function Home() {
                     <div className="flex items-center justify-between p-2 bg-gray-200 rounded-t-lg">
                         <div className="flex items-center">
                             <UserCircleIcon className="h-8 w-8 mr-2"/>
-                            <h2 className="text-xl font-semibold">As</h2>
+                            <h2 className="text-xl font-semibold">Assistant</h2>
                         </div>
                         <div>
                             <DotsVerticalIcon className="h-6 w-6"/>
@@ -77,7 +77,7 @@ export default function Home() {
                 </div>
             </main>
             <footer className="bg-gray-200 py-4 text-center">
-                <p>© 2023 YourCompanyName. All Rights Reserved</p>
+                <p>Â© 2023 YourCompanyName. All Rights Reserved</p>
             </footer>
         </>
     );
