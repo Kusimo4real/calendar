@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Calendar, Views, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
@@ -65,26 +65,29 @@ export default function SchedulePage() {
 
     return (
         <AdminLayout title="Suggests">
-            {loading ? (
-                <p>Loading...</p>
-            ) : (
-                <>
-                    <Calendar
-                        localizer={localizer}
-                        defaultDate={new Date(date)}
-                        defaultView={Views.DAY}
-                        events={events}
-                        views={['day']}
-                        style={{ height: 700 }}
-                    />
-                    <button
-                        onClick={() => saveCalendar()}
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
-                    >
-                        Save Calendar
-                    </button>
-                </>
-            )}
+            <Suspense fallback={<p>Loading...</p>}>
+                {loading ? (
+                    <p>Loading...</p>
+                ) : (
+                    <>
+                        <Calendar
+                            localizer={localizer}
+                            defaultDate={new Date(date)}
+                            defaultView={Views.DAY}
+                            events={events}
+                            views={['day']}
+                            style={{ height: 700 }}
+                        />
+                        <button
+                            onClick={() => saveCalendar()}
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+                        >
+                            Save Calendar
+                        </button>
+                    </>
+                )}
+            </Suspense>
         </AdminLayout>
     );
 }
+
