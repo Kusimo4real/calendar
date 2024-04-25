@@ -3,7 +3,7 @@
 import {useState, useEffect, useMemo} from 'react';
 import { Calendar, Views, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
-import 'moment/locale/zh-cn';
+import 'moment/locale/en-gb';
 import AdminLayout from '../component/admin-layout';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
