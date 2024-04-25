@@ -1,5 +1,4 @@
-'use client'
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Calendar, Views, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
@@ -88,3 +87,11 @@ export default function SchedulePage() {
         </AdminLayout>
     );
 }
+
+const SuspensePage = () => (
+    <Suspense fallback={<p>Loading...</p>}>
+        <SchedulePage />
+    </Suspense>
+);
+
+export default SuspensePage;
