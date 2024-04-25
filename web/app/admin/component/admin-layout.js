@@ -27,7 +27,7 @@ const AdminLayout = ({ children, title }) => {
                         </li>
                     </ul>
                 </aside>
-                <main className="flex-1 p-4 overflow-y-auto bg-gray-100">
+                <main className="flex-1 p-4 overflow-y-auto bg-gray-100 text-black">
                     {children}
                 </main>
             </div>
