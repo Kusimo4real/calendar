@@ -46,6 +46,7 @@ const CalendarPage = () => {
     return (
         <AdminLayout title="Calendar">
             <Calendar
+                localizer={localizer}
                 events={events}
                 defaultView={Views.WEEK}
                 startAccessor="start"
