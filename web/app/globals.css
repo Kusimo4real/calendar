@@ -31,7 +31,3 @@ body {
     text-wrap: balance;
   }
 }
-
-.flex-1 p-4.overflow-y-auto.bg-gray-100 {
-  color:#000;
-}
