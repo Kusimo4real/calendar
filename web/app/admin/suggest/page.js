@@ -1,11 +1,10 @@
 'use client'
-import { useEffect, useState, Suspense } from 'react';
-import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { Calendar, Views, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import AdminLayout from '../component/admin-layout';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import { Skeleton } from 'antd';
 
 const localizer = momentLocalizer(moment);
 
@@ -13,6 +12,10 @@ export default function SchedulePage() {
     const [events, setEvents] = useState([]);
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
+    const params = useSearchParams();
+    const date = params.get('date');
+    const selectedRequests = JSON.parse(params.get('selectedRequests'));
+    let requested = false
     const router = useRouter();
 
     const fetchEvents = async (date, selectedRequests) => {
@@ -54,37 +57,34 @@ export default function SchedulePage() {
     };
 
     useEffect(() => {
-        const date = router.query.date;
-        const selectedRequests = JSON.parse(router.query.selectedRequests);
-        if (date && selectedRequests && loading) {
+        if (date && selectedRequests && !requested) {
+            requested = true
             fetchEvents(date, selectedRequests);
         }
-    }, [router.query.date, router.query.selectedRequests]); // Добавил зависимости
+    }, []);
 
     return (
         <AdminLayout title="Suggests">
-            <Suspense fallback={<Skeleton active />}>
-                {loading ? (
-                    <Skeleton active />
-                ) : (
-                    <>
-                        <Calendar
-                            localizer={localizer}
-                            defaultDate={new Date(router.query.date)}
-                            defaultView={Views.DAY}
-                            events={events}
-                            views={['day']}
-                            style={{ height: 700 }}
-                        />
-                        <button
-                            onClick={() => saveCalendar()}
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
-                        >
-                            Save Calendar
-                        </button>
-                    </>
-                )}
-            </Suspense>
+            {loading ? (
+                <p>Loading...</p>
+            ) : (
+                <>
+                    <Calendar
+                        localizer={localizer}
+                        defaultDate={new Date(date)}
+                        defaultView={Views.DAY}
+                        events={events}
+                        views={['day']}
+                        style={{ height: 700 }}
+                    />
+                    <button
+                        onClick={() => saveCalendar()}
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+                    >
+                        Save Calendar
+                    </button>
+                </>
+            )}
         </AdminLayout>
     );
 }
