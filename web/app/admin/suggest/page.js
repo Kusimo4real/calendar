@@ -1,10 +1,11 @@
 'use client'
 import { useEffect, useState, Suspense } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 import { Calendar, Views, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import AdminLayout from '../component/admin-layout';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import { Skeleton } from 'antd';
 
 const localizer = momentLocalizer(moment);
 
@@ -12,10 +13,6 @@ export default function SchedulePage() {
     const [events, setEvents] = useState([]);
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
-    const params = useSearchParams();
-    const date = params.get('date');
-    const selectedRequests = JSON.parse(params.get('selectedRequests'));
-    let requested = false
     const router = useRouter();
 
     const fetchEvents = async (date, selectedRequests) => {
@@ -57,22 +54,23 @@ export default function SchedulePage() {
     };
 
     useEffect(() => {
-        if (date && selectedRequests && !requested) {
-            requested = true
+        const date = router.query.date;
+        const selectedRequests = JSON.parse(router.query.selectedRequests);
+        if (date && selectedRequests && loading) {
             fetchEvents(date, selectedRequests);
         }
-    }, []);
+    }, [router.query.date, router.query.selectedRequests]); // Добавил зависимости
 
     return (
         <AdminLayout title="Suggests">
-            <Suspense fallback={<p>Loading...</p>}>
+            <Suspense fallback={<Skeleton active />}>
                 {loading ? (
-                    <p>Loading...</p>
+                    <Skeleton active />
                 ) : (
                     <>
                         <Calendar
                             localizer={localizer}
-                            defaultDate={new Date(date)}
+                            defaultDate={new Date(router.query.date)}
                             defaultView={Views.DAY}
                             events={events}
                             views={['day']}
@@ -90,4 +88,3 @@ export default function SchedulePage() {
         </AdminLayout>
     );
 }
-
