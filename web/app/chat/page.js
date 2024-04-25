@@ -50,7 +50,7 @@ export default function Home() {
                     <div className="flex items-center justify-between p-2 bg-gray-200 rounded-t-lg">
                         <div className="flex items-center">
                             <UserCircleIcon className="h-8 w-8 mr-2"/>
-                            <h2 className="text-xl font-semibold">Assistant</h2>
+                            <h2 className="text-xl font-semibold">Assistants</h2>
                         </div>
                         <div>
                             <DotsVerticalIcon className="h-6 w-6"/>
