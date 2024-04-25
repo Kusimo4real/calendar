@@ -32,7 +32,7 @@ const AdminLayout = ({ children, title }) => {
                 </main>
             </div>
             <footer className="bg-gray-800 text-white h-16 flex items-center justify-center">
-                <p>© 2024 OpenAI Secretary</p>
+                <p>Â© 2024 OpenAI Secretary</p>
             </footer>
         </div>
     );
